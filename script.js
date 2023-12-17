@@ -1,23 +1,28 @@
 var clutter= " ";
 var rn;  
 var timer = 60;
-const timerleft = setInterval(Timer , 1000);
+var score = 0;
+var timerleft = setInterval(Timer , 1000);
+
+function makeHit(){
+    rn = Math.floor(Math.random()*10);
+    document.querySelector("#hitval").textContent = rn;
+}
 
 function makeBubble(){
-for(let i=1; i<=360; i++ ){
-    rn = Math.floor(Math.random()*10);
-    clutter += `<div class="bubble">${rn}</div>`;
+for( var i=1; i<=360; i++ ){
+    var random = Math.floor(Math.random()*10)
+    clutter += `<div class="bubble">${random}</div>`;
 }
 document.querySelector(".pbtm").innerHTML = clutter;
-document.querySelector("#hitval").textContent = rn;
+
 }
+
 
 function Timer(){
     if(timer > 0){
 
         timer--;
-        console.log(timer)
-        console.log(timerleft)
         document.querySelector("#timer").textContent=timer;
     }
     else{
@@ -26,5 +31,21 @@ function Timer(){
     }
 }
 
+function increaseScore(){
+    score += 10;
+    document.querySelector('#scoreval').textContent=score;
+}
+
+document.querySelector(".pbtm").addEventListener("click", function(dets){
+    var clicknum = Number(dets.target.textContent);
+
+    if(clicknum === rn){
+        increaseScore();
+        makeBubble();
+        makeHit();
+    }
+})
+
 Timer();
 makeBubble();
+makeHit();
